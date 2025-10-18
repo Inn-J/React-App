@@ -6,41 +6,21 @@ import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-let currentProductId = 9;
-function Home({ className }) {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-  async function getProducts() {
-    const products = await axios.get(
-      'https://68e9f9e1f1eeb3f856e59831.mockapi.io/api/products'
-    );
-    setProducts(products.data);
-  }
 
-  getProducts();
-}, []);
 
-  function addProduct(product) {
-  const newProduct = { id: ++currentProductId, ...product };
-  setProducts([...products, newProduct]);
-}
+function Home({ className, products }) {
   return (
-  <div className={className}>
-  <h1 >New Products</h1>
-  {
-  products.length > 0 ? (
-    <ul className="Home__products">
-      {products.map((product) => (
-        <Product key={product.id} item={product} />
-      ))}
-    </ul>
-  ) : (
-    <div>Loading products....</div>
-  )
+    <div className={className}>
+      <h1>New Products</h1>
+      <ul className="Home__products">
+        {products.map((product) => (
+          <Product key={product.id} item={product} />
+        ))}
+      </ul>
+    </div>
+  );
 }
-  <AddForm addProduct={addProduct} />
-</div>);
-}
+
 Home.propTypes = {
   className: PropTypes.string.isRequired,
 };
